@@ -1,0 +1,107 @@
+namespace Turn_based_RPG
+{
+    internal class Program
+    {
+        static void Main(string[] args)
+        {
+            Console.WriteLine("Welcome to a turn-based rpg!");
+            Random random = new Random();
+
+
+            //hp
+            double playerHP = 40;
+            double enemyHP = 40;
+
+            // maxhp
+            double maxHP = 40;
+
+            //dmg
+            double playerDMG = 3;
+            double enemyDMG = 3;
+
+            //heal
+            int playerHeal = 3;
+            int enemyHeal = 3;
+
+            // attack up potion
+            int DMGPotion = 2;
+
+            double attackMultiplier = 1.2;
+
+
+            while (playerHP > 0 && enemyHP > 0)
+            {
+                Console.WriteLine(" - Players turn - ");
+                Console.WriteLine(" Player " + playerHP + "HP | Enemy " + enemyHP + "HP");
+                Console.Write("Attack Potion: " + DMGPotion);
+                Console.WriteLine();
+                Console.WriteLine("Choose an option:");
+                Console.WriteLine("(a) Attack");
+                Console.WriteLine("(b) Heal");
+                Console.WriteLine("(c) Use Attack Potion");
+                Console.Write("Choose: ");
+
+
+                string option = Console.ReadLine();
+
+                if (option == "a")
+                {
+                    double damageThisTurn = random.Next(2, 6);
+                    double finalDMG = damageThisTurn * (playerDMG > 0 ? playerDMG : 1);
+                    enemyHP -= finalDMG;
+                    Console.WriteLine("Player attacked enemy for " + finalDMG + "damage!");
+                    Console.WriteLine();
+                }
+                else if (option == "b")
+                {
+                    playerHP = (Math.Min(playerHP + playerHeal, maxHP));
+                    Console.WriteLine("Player healed " + playerHeal + "HP!");
+                    Console.WriteLine();
+                }
+                else if (option == "c")
+                {
+                    if (DMGPotion > 0)
+                    {
+                        DMGPotion -= 1;
+                        playerDMG *= attackMultiplier;
+                        Console.WriteLine("Player used an attack potion and can deal 1.5X the damage!");
+                        Console.WriteLine("Attack Potion left: " + DMGPotion);
+                    }
+                    else
+                    {
+                        Console.WriteLine("You have no attack potions left!");
+                    }
+                }
+
+                Console.WriteLine();
+
+                if (enemyHP > 0)
+                {
+                    Console.WriteLine(" - Enemy turn -");
+                    int enemyOption = random.Next(0, 2); // 0 for attack, 1 for heal
+
+                    if (enemyOption == 0)
+                    {
+                        playerHP -= enemyDMG;
+                        Console.WriteLine("Enemy dealt " + enemyDMG + " damage to the player!");
+                        Console.WriteLine();
+                    }
+                    else if (enemyOption == 1)
+                    {
+                        enemyHP = (Math.Min(enemyHP + enemyHeal, maxHP));
+                        Console.WriteLine("Enemy restored " + enemyHeal + "HP!");
+                        Console.WriteLine();
+                    }
+                }
+            }
+            if (enemyHP <= 0)
+            {
+                Console.WriteLine("Congrats! You win!");
+            }
+            else if (playerHP <= 0) 
+            {
+                Console.WriteLine("Congrats! You lose! LOOOOOOOOOOOOSER");
+            }
+        }
+    }
+}
