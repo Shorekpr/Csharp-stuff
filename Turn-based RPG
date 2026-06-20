@@ -32,7 +32,7 @@ namespace Turn_based_RPG
             while (playerHP > 0 && enemyHP > 0)
             {
                 Console.WriteLine(" - Players turn - ");
-                Console.WriteLine(" Player " + playerHP + "HP | Enemy " + enemyHP + "HP");
+                Console.WriteLine(" Player " + playerHP.ToString("F2") + "HP | Enemy " + enemyHP.ToString("F2") + "HP");
                 Console.Write("Attack Potion: " + DMGPotion);
                 Console.WriteLine();
                 Console.WriteLine("Choose an option:");
@@ -49,7 +49,7 @@ namespace Turn_based_RPG
                     double damageThisTurn = random.Next(2, 6);
                     double finalDMG = damageThisTurn * (playerDMG > 0 ? playerDMG : 1);
                     enemyHP -= finalDMG;
-                    Console.WriteLine("Player attacked enemy for " + finalDMG + "damage!");
+                    Console.WriteLine("Player attacked enemy for " + finalDMG.ToString("F2") + " damage!");
                     Console.WriteLine();
                 }
                 else if (option == "b")
@@ -64,7 +64,7 @@ namespace Turn_based_RPG
                     {
                         DMGPotion -= 1;
                         playerDMG *= attackMultiplier;
-                        Console.WriteLine("Player used an attack potion and can deal 1.5X the damage!");
+                        Console.WriteLine("Player used an attack potion and can deal 1.2X the damage!");
                         Console.WriteLine("Attack Potion left: " + DMGPotion);
                     }
                     else
